@@ -1,0 +1,1 @@
+org.springframework.boot.env.EnvironmentPostProcessor=com.firstspringproject.springboot_first_app.DotenvInitializer
