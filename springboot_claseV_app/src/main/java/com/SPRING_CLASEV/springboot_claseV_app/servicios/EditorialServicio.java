@@ -1,8 +1,8 @@
-package com.SPRING_CLASEIV.springboot_claseIV_app.servicios;
+package com.SPRING_CLASEV.springboot_claseV_app.servicios;
 
-import com.SPRING_CLASEIV.springboot_claseIV_app.entidades.Editorial;
-import com.SPRING_CLASEIV.springboot_claseIV_app.excepciones.MiException;
-import com.SPRING_CLASEIV.springboot_claseIV_app.repositorios.EditorialRepositorio;
+import com.SPRING_CLASEV.springboot_claseV_app.entidades.Editorial;
+import com.SPRING_CLASEV.springboot_claseV_app.excepciones.MiException;
+import com.SPRING_CLASEV.springboot_claseV_app.repositorios.EditorialRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +42,11 @@ public class EditorialServicio {
             editorialActual.setNombre(nombre);
             editorialRepositorio.save(editorialActual);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Editorial getOne(UUID idEditorial) {
+        return editorialRepositorio.getReferenceById(idEditorial);
     }
 
     public void validar(UUID idEditorial) throws MiException {

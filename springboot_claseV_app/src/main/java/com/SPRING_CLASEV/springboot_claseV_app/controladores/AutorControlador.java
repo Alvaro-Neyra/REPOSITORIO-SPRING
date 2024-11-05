@@ -1,14 +1,17 @@
-package com.SPRING_CLASEIV.springboot_claseIV_app.controladores;
+package com.SPRING_CLASEV.springboot_claseV_app.controladores;
 
-import com.SPRING_CLASEIV.springboot_claseIV_app.excepciones.MiException;
-import com.SPRING_CLASEIV.springboot_claseIV_app.servicios.AutorServicio;
+import com.SPRING_CLASEV.springboot_claseV_app.entidades.Autor;
+import com.SPRING_CLASEV.springboot_claseV_app.excepciones.MiException;
+import com.SPRING_CLASEV.springboot_claseV_app.servicios.AutorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,5 +39,30 @@ public class AutorControlador {
             return "autor_form.html";
         }
         return "index.html";
+    }
+
+    @GetMapping("/lista")
+    public String listar(Model model) {
+        List<Autor> autores = autorServicio.listarAutores();
+        model.addAttribute( "autores", autores);
+        return "autor_list.html";
+    }
+
+    @GetMapping("/modificar/{id}")
+    public String modificar(@PathVariable UUID id, ModelMap modelo) {
+        modelo.put("autor", autorServicio.getOne(id));
+        return "autor_modificar.html";
+    }
+
+    @PostMapping("/modificar/{id}")
+    public String modificar(@PathVariable UUID id, String nombre, ModelMap modelo) {
+        try {
+            autorServicio.modificarAutor(nombre, id);
+            modelo.addAttribute("exito", "Autor actualizado exitosamente");
+            return "redirect:../lista";
+        } catch (MiException e) {
+            modelo.put("error", e.getMessage());
+            return "autor_modificar.html";
+        }
     }
 }

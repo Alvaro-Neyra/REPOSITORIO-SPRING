@@ -1,6 +1,6 @@
-package com.SPRING_CLASEIV.springboot_claseIV_app.repositorios;
+package com.SPRING_CLASEV.springboot_claseV_app.repositorios;
 
-import com.SPRING_CLASEIV.springboot_claseIV_app.entidades.Editorial;
+import com.SPRING_CLASEV.springboot_claseV_app.entidades.Editorial;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

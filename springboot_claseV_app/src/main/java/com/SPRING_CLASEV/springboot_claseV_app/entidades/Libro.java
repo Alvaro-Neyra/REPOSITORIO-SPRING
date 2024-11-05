@@ -1,4 +1,4 @@
-package com.SPRING_CLASEIV.springboot_claseIV_app.entidades;
+package com.SPRING_CLASEV.springboot_claseV_app.entidades;
 
 import jakarta.persistence.*;
 

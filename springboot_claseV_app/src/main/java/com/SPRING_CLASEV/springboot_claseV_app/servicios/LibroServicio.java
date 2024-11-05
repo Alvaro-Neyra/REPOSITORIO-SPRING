@@ -1,12 +1,12 @@
-package com.SPRING_CLASEIV.springboot_claseIV_app.servicios;
+package com.SPRING_CLASEV.springboot_claseV_app.servicios;
 
-import com.SPRING_CLASEIV.springboot_claseIV_app.entidades.Autor;
-import com.SPRING_CLASEIV.springboot_claseIV_app.entidades.Editorial;
-import com.SPRING_CLASEIV.springboot_claseIV_app.entidades.Libro;
-import com.SPRING_CLASEIV.springboot_claseIV_app.excepciones.MiException;
-import com.SPRING_CLASEIV.springboot_claseIV_app.repositorios.AutorRepositorio;
-import com.SPRING_CLASEIV.springboot_claseIV_app.repositorios.EditorialRepositorio;
-import com.SPRING_CLASEIV.springboot_claseIV_app.repositorios.RepositorioLibro;
+import com.SPRING_CLASEV.springboot_claseV_app.entidades.Autor;
+import com.SPRING_CLASEV.springboot_claseV_app.entidades.Editorial;
+import com.SPRING_CLASEV.springboot_claseV_app.entidades.Libro;
+import com.SPRING_CLASEV.springboot_claseV_app.excepciones.MiException;
+import com.SPRING_CLASEV.springboot_claseV_app.repositorios.AutorRepositorio;
+import com.SPRING_CLASEV.springboot_claseV_app.repositorios.EditorialRepositorio;
+import com.SPRING_CLASEV.springboot_claseV_app.repositorios.RepositorioLibro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,18 +64,33 @@ public class LibroServicio {
         validar(idAutor);
         validar(idEditorial);
         validar(isbn);
-        Optional<Libro> libro = repositorioLibro.findById(isbn);
-        Optional<Autor> autor = autorRepositorio.findById(idAutor);
-        Optional<Editorial> editorial = editorialRepositorio.findById(idEditorial);
+        Optional<Libro> respuesta = repositorioLibro.findById(isbn);
+        Optional<Autor> respuestaAutor = autorRepositorio.findById(idAutor);
+        Optional<Editorial> respuestaEditorial = editorialRepositorio.findById(idEditorial);
 
-        if (autor.isPresent() && editorial.isPresent() && libro.isPresent()) {
-            Libro libroModificado = libro.get();
-            libroModificado.setTitulo(titulo);
-            libroModificado.setEjemplares(ejemplares);
-            libroModificado.setAutor(autor.get());
-            libroModificado.setEditorial(editorial.get());
-            repositorioLibro.save(libroModificado);
+        Autor autor = new Autor();
+        Editorial editorial = new Editorial();
+
+        if (respuestaAutor.isPresent()) {
+            autor = respuestaAutor.get();
         }
+
+        if (respuestaEditorial.isPresent()) {
+            editorial = respuestaEditorial.get();
+        }
+
+        if (respuesta.isPresent()) {
+            Libro libro = respuesta.get();
+            libro.setTitulo(titulo);
+            libro.setEjemplares(ejemplares);
+            libro.setAutor(autor);
+            libro.setEditorial(editorial);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public Libro getOne(Long id) {
+        return repositorioLibro.getReferenceById(id);
     }
 
     private void validar(Long id) throws MiException {

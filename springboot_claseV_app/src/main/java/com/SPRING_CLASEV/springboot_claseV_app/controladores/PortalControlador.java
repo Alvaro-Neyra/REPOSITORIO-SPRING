@@ -1,4 +1,4 @@
-package com.SPRING_CLASEIV.springboot_claseIV_app.controladores;
+package com.SPRING_CLASEV.springboot_claseV_app.controladores;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

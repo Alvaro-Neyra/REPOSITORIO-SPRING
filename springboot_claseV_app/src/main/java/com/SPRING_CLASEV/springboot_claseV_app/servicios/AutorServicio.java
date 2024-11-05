@@ -1,8 +1,8 @@
-package com.SPRING_CLASEIV.springboot_claseIV_app.servicios;
+package com.SPRING_CLASEV.springboot_claseV_app.servicios;
 
-import com.SPRING_CLASEIV.springboot_claseIV_app.entidades.Autor;
-import com.SPRING_CLASEIV.springboot_claseIV_app.excepciones.MiException;
-import com.SPRING_CLASEIV.springboot_claseIV_app.repositorios.AutorRepositorio;
+import com.SPRING_CLASEV.springboot_claseV_app.entidades.Autor;
+import com.SPRING_CLASEV.springboot_claseV_app.excepciones.MiException;
+import com.SPRING_CLASEV.springboot_claseV_app.repositorios.AutorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +42,11 @@ public class AutorServicio {
             autor.setNombre(nombre);
             autorRepositorio.save(autor);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Autor getOne(UUID id) {
+        return autorRepositorio.getReferenceById(id);
     }
 
     private void validar(String nombre) throws MiException {
