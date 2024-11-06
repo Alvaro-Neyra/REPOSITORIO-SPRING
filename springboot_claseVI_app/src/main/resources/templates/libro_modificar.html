@@ -84,6 +84,7 @@
         <option th:each="autor : ${autores}"
                 th:value="${autor.id}"
                 th:text="${autor.nombre}"
+                th:selected="${autor.id == libro.autor.id}"
         />
       </select>
     </div>
@@ -93,6 +94,7 @@
         <option th:each="editorial : ${editoriales}"
                 th:value="${editorial.id}"
                 th:text="${editorial.nombre}"
+                th:selected="${editorial.id == libro.editorial.id}"
         />
       </select>
     </div>

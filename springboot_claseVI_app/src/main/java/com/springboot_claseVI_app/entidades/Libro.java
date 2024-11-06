@@ -17,9 +17,11 @@ public class Libro {
     @Temporal(TemporalType.DATE)
     @Column(name="alta")
     private Date alta;
+
     @ManyToOne
     @JoinColumn(name = "id_autor", referencedColumnName = "id")
     private Autor autor;
+
     @ManyToOne
     @JoinColumn(name = "id_editorial", referencedColumnName = "id")
     private Editorial editorial;
