@@ -5,8 +5,10 @@ import com.springboot_claseVII_app.enumeraciones.Rol;
 import com.springboot_claseVII_app.excepciones.MiException;
 import com.springboot_claseVII_app.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,6 +34,7 @@ public class UsuarioServicios implements UserDetailsService {
         nuevoUsuario.setPassword(new BCryptPasswordEncoder().encode(password));
         nuevoUsuario.setRol(Rol.USER);
         usuarioRepositorio.save(nuevoUsuario);
+        System.out.println("Usuario creado");
     }
 
     @Transactional(readOnly = true)
@@ -50,8 +53,18 @@ public class UsuarioServicios implements UserDetailsService {
 
             return new User(usuario.getEmail(), usuario.getPassword(), permisos);
         }else{
-            return null;
+            return (UserDetails) new UsernameNotFoundException("Usuario no encontrado");
         }
+    }
+
+    public Usuario getUsuarioAutenticado() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof UserDetails) {
+            String email = ((UserDetails) auth.getPrincipal()).getUsername();
+            return usuarioRepositorio.buscarPorEmail(email);
+        }
+        return null;
     }
 
     private void validar(String email) throws MiException {
@@ -76,3 +89,4 @@ public class UsuarioServicios implements UserDetailsService {
     }
 
 }
+

@@ -37,7 +37,7 @@ public class AutorControlador {
             model.addAttribute("error", e.getMessage());
             return "autor_form.html";
         }
-        return "index.html";
+        return "inicio.html";
     }
 
     @GetMapping("/lista")

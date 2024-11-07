@@ -46,7 +46,7 @@ public class LibroControlador {
             modelo.addAttribute("editoriales", editorialServicio.listarEditoriales());
             return "libro_form.html";
         }
-        return "index.html";
+        return "inicio.html";
     }
 
     @GetMapping("/lista")

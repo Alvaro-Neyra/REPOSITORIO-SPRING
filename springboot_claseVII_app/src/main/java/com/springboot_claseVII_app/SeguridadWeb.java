@@ -21,7 +21,7 @@ public class SeguridadWeb {
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/inicio").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/registrar").permitAll()
+                        .requestMatchers("/registrar", "/registro").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

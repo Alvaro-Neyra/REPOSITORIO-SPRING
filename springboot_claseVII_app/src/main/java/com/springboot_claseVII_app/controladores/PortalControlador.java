@@ -1,7 +1,9 @@
 package com.springboot_claseVII_app.controladores;
 
+import com.springboot_claseVII_app.entidades.Usuario;
 import com.springboot_claseVII_app.excepciones.MiException;
 import com.springboot_claseVII_app.servicios.UsuarioServicios;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,9 @@ public class PortalControlador {
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/inicio")
-    public String inicio() {
+    public String inicio(HttpSession session) {
+        Usuario usuario = usuarioServicio.getUsuarioAutenticado();
+        session.setAttribute("usuariosession", usuario);
         return "inicio.html";
     }
 
@@ -42,6 +46,7 @@ public class PortalControlador {
         return "login.html";
     }
 
+
     @PostMapping("/registro")
     public String registro(@RequestParam String nombre,
                            @RequestParam String email,
@@ -51,11 +56,10 @@ public class PortalControlador {
         try {
             usuarioServicio.registrar(nombre, email, password, password2);
             modelo.put("exito", "¡Usuario registrado exitosamente!");
-            return "index.html";
+            return "login.html";
         } catch (MiException e) {
             modelo.put("error", e.getMessage());
             return "registrar.html";
         }
     }
-
 }
