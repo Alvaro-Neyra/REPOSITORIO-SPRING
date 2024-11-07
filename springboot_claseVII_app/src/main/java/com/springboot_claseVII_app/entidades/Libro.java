@@ -14,6 +14,7 @@ public class Libro {
     private String titulo;
     @Column(name="ejemplares")
     private Integer ejemplares;
+
     @Temporal(TemporalType.DATE)
     @Column(name="alta")
     private Date alta;

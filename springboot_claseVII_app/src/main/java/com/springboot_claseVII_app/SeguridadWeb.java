@@ -17,8 +17,28 @@ public class SeguridadWeb {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests((authorize) -> authorize.requestMatchers("/css/", "/js/", "/img/", "/**").permitAll())
-                .csrf(csrf->csrf.disable());
+        http.authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/inicio").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/registrar").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin((form) -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/logincheck")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/inicio", true)
+                        .permitAll()
+                )
+                .logout((logout) -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .permitAll()
+                )
+                .csrf(csrf -> csrf.disable());
+
         return http.build();
     }
 }
