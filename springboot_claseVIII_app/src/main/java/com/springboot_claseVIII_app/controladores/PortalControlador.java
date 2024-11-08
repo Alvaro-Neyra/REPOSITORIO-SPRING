@@ -25,11 +25,15 @@ public class PortalControlador {
         return "index.html";
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session) {
-        Usuario usuario = usuarioServicio.getUsuarioAutenticado();
-        session.setAttribute("usuariosession", usuario);
+        Usuario usuario = (Usuario) session.getAttribute("usuariosession");
+        System.out.println(usuario.toString());
+        if (usuario.getRol().toString().equals("ADMIN")) {
+            System.out.println("redireccionando....");
+            return "redirect:/admin/dashboard";
+        }
         return "inicio.html";
     }
 
