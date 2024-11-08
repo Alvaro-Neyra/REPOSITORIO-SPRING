@@ -21,8 +21,16 @@
         <header class="header">
             <section class="contenedorMain">
                 <div class="tituloBiblioteca">
-                    <a class="navbar-brand" href="#">BIBLIOTECA EGG</a>
+                    <a class="navbar-brand" th:text="'Error ' + ${codigo}" href="#">BIBLIOTECA EGG</a>
+                    <p class="tituloLibros" th:text="${mensaje}"></p>
                 </div>
+                <section class="text-center container">
+                    <div class="row mt-3">
+                        <div class="divVolver">
+                            <a href="/inicio" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+                        </div>
+                    </div>
+                </section>
                 <div class="container contenedorLibros">
                     <p class="tituloLibros">Encontrá todos los Libros Aquí!</p>
 

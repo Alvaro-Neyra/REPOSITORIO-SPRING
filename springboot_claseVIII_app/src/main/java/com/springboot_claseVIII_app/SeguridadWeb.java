@@ -21,10 +21,11 @@ public class SeguridadWeb {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/inicio").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/registrar", "/registro").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
@@ -38,6 +39,9 @@ public class SeguridadWeb {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
                         .permitAll()
+                )
+                .exceptionHandling((exceptions) -> exceptions
+                        .accessDeniedPage("/error") // Redirige a error en caso de acceso denegado
                 )
                 .csrf(csrf -> csrf.disable());
 

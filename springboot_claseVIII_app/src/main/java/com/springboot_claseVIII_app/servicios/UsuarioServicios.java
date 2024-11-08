@@ -1,5 +1,6 @@
 package com.springboot_claseVIII_app.servicios;
 
+import com.springboot_claseVIII_app.entidades.Libro;
 import com.springboot_claseVIII_app.entidades.Usuario;
 import com.springboot_claseVIII_app.enumeraciones.Rol;
 import com.springboot_claseVIII_app.excepciones.MiException;
@@ -21,7 +22,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioServicios implements UserDetailsService {
@@ -66,6 +69,41 @@ public class UsuarioServicios implements UserDetailsService {
         }
     }
 
+    @Transactional
+    public List<Usuario> listarUsuarios(){
+        List<Usuario> usuarios = usuarioRepositorio.findAll();
+        return usuarios;
+    }
+
+    @Transactional
+    public void modificarUsuario(String id, String nombre, String email, String password, String password2, Rol rol) throws MiException {
+        validar(nombre, email, password, password2);
+        validar(rol);
+        Optional<Usuario> usuarioEncontrado = usuarioRepositorio.findById(id);
+        if (usuarioEncontrado.isPresent()) {
+            usuarioEncontrado.get().setNombre(nombre);
+            usuarioEncontrado.get().setEmail(email);
+            usuarioEncontrado.get().setPassword(new BCryptPasswordEncoder().encode(password));
+            usuarioEncontrado.get().setRol(rol);
+            usuarioRepositorio.save(usuarioEncontrado.get());
+        }
+    }
+
+    @Transactional
+    public void cambiarRol(String id) {
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+
+        if (respuesta.isPresent()) {
+            Usuario usuario = respuesta.get();
+
+            if (usuario.getRol().equals(Rol.USER)) {
+                usuario.setRol(Rol.ADMIN);
+            } else if (usuario.getRol().equals(Rol.ADMIN)) {
+                usuario.setRol(Rol.USER);
+            }
+        }
+    }
+
     public Usuario getUsuarioAutenticado() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -76,9 +114,20 @@ public class UsuarioServicios implements UserDetailsService {
         return null;
     }
 
+    @Transactional
+    public Usuario getOne(String id) {
+        return usuarioRepositorio.getReferenceById(id);
+    }
+
     private void validar(String email) throws MiException {
         if (email.isEmpty() || email == null) {
             throw new MiException("El email no puede estar vacio");
+        }
+    }
+
+    private void validar(Rol rol) throws MiException {
+        if (rol == null || !EnumSet.allOf(Rol.class).contains(rol)) {
+            throw new MiException("El rol es inválido o no pertenece a los valores permitidos");
         }
     }
 

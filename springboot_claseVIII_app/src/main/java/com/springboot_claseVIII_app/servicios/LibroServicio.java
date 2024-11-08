@@ -85,6 +85,7 @@ public class LibroServicio {
             libro.setEjemplares(ejemplares);
             libro.setAutor(autor);
             libro.setEditorial(editorial);
+            repositorioLibro.save(libro);
         }
     }
 
