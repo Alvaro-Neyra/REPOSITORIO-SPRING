@@ -27,6 +27,7 @@ public class Articulo {
     private Fabrica fabrica;
 
     public Articulo() {
+
     }
 
     public String getIdArticulo() {

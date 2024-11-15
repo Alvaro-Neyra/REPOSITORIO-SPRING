@@ -11,4 +11,6 @@ import com.desafio_integrador.entidades.Usuario;
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
     @Query("SELECT u FROM Usuario u WHERE u.id = :id")
     Usuario buscarPorId(String id);
+    @Query("SELECT u FROM Usuario u WHERE u.username = :username")
+    Usuario buscarPorUsername(String username);
 }

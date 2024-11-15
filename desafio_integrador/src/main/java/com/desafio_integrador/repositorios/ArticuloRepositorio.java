@@ -11,4 +11,8 @@ import com.desafio_integrador.entidades.Articulo;
 public interface ArticuloRepositorio extends JpaRepository<Articulo, String> {
     @Query("SELECT a FROM Articulo a WHERE a.id = :id")
     Articulo buscarPorIdArticulo(@Param("id") String id);
+    @Query("SELECT a FROM Articulo a WHERE a.nombre = :nombre")
+    Articulo buscarPorNombreArticulo(@Param("nombre") String nombre);
+    @Query("SELECT MAX(a.nroArticulo) FROM Articulo a")
+    Integer findMaxNroArticulo();
 }

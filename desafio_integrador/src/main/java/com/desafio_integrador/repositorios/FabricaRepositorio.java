@@ -11,4 +11,6 @@ import com.desafio_integrador.entidades.Fabrica;
 public interface FabricaRepositorio extends JpaRepository<Fabrica, String> {
     @Query("SELECT f FROM Fabrica f WHERE f.id = :id")
     Fabrica buscarPorIdFabrica(@Param("id") String id);
+    @Query("SELECT f FROM Fabrica f WHERE f.nombre = :nombre")
+    Fabrica buscarPorNombreFabrica(@Param("nombre") String nombre);
 }
