@@ -9,10 +9,10 @@ import com.desafio_integrador.entidades.Articulo;
 
 @Repository
 public interface ArticuloRepositorio extends JpaRepository<Articulo, String> {
-    @Query("SELECT a FROM Articulo a WHERE a.id = :id")
+    @Query("SELECT a FROM Articulo a WHERE a.idArticulo = :id")
     Articulo buscarPorIdArticulo(@Param("id") String id);
-    @Query("SELECT a FROM Articulo a WHERE a.nombre = :nombre")
-    Articulo buscarPorNombreArticulo(@Param("nombre") String nombre);
+    @Query("SELECT a FROM Articulo a WHERE a.nombreArticulo = :nombre")
+    Articulo buscarPorNombreArticulo(@Param("nombre") String nombreArticulo);
     @Query("SELECT MAX(a.nroArticulo) FROM Articulo a")
     Integer findMaxNroArticulo();
 }

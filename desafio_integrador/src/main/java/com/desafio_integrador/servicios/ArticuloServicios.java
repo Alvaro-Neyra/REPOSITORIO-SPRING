@@ -22,7 +22,8 @@ public class ArticuloServicios {
     private ArticuloRepositorio articuloRepositorio;
     @Autowired
     private FabricaRepositorio fabricaRepositorio;
-    @Autowired
+
+    
     private AtomicInteger nroArticuloContador;
 
 
