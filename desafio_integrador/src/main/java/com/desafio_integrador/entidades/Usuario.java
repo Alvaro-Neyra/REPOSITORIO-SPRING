@@ -62,7 +62,7 @@ public class Usuario {
         this.password = password;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return this.password;
     }
 
