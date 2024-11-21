@@ -25,21 +25,21 @@
         </div>
     </div>
 
-    <form class="formulario" th:action="@{/libro/registro}" method="post">
+    <form class="formulario" th:action="@{/articulo/guardar}" method="post">
         <div class="form-group my-3">
             <label class="mb-2">Cargar Articulo</label>
-            <input type="number" class="form-control" name="id" placeholder="ID del Articulo">
+            <input type="number" class="form-control" name="id" placeholder="ID del Articulo" hidden>
         </div>
         <div class="form-group my-3">
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre del articulo">
+            <input type="text" class="form-control" name="nombreArticulo" placeholder="Nombre del articulo">
         </div>
         <div class="form-group my-3">
-            <input type="text" class="descripcion" name="descripcion" placeholder="Descripcion del aritculo">
+            <input type="text" class="descripcion" name="descripcionArticulo" placeholder="Descripcion del aritculo">
         </div>
         <div class="form-group my-3">
-            <select class="form-control" name="idAutor">
+            <select class="form-control" name="idFabrica">
                 <option value="">Seleccionar Fabrica</option>
-                    <option th:each="fabrica : ${fabricas}" th:value="${fabrica.nombre}" th:text="${fabrica.nombre}"></option>
+                    <option th:each="fabrica : ${fabricas}" th:value="${fabrica.idFabrica}" th:text="${fabrica.nombreFabrica}"></option>
             </select>
         </div>
         <button type="submit"  class="btn btn-primary mt-3 botones">Guardar</button>

@@ -48,6 +48,9 @@ public class ArticuloServicios {
             articulo.setNroArticulo(nroArticuloContador.getAndIncrement());
             articulo.setFabrica(nuevaFabrica);
             articuloRepositorio.save(articulo);
+            System.out.println("Nombre del ariculo: " + articulo.getNombreArticulo());
+            System.out.println("Descripcion del articulo: " + articulo.getDescripcionArticulo());
+            System.out.println("Articulo guardado con exito");
         }
     }
     @Transactional

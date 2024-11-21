@@ -11,43 +11,28 @@
     <ul class="navbar-nav ms-auto elementos">
       <li th:if="${session.usuariosession != null}" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Libros
+          Articulos
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/libro/registrar}">Crear Libro</a></li>
+          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/articulo/guardar}">Crear Articulo</a></li>
           <li sec:authorize="hasRole('ADMIN')"><hr class="dropdown-divider"></li>
 
-          <li><a class="dropdown-item" th:href="@{/libro/lista}">Listar Libros</a></li>
+          <li><a class="dropdown-item" th:href="@{/articulo/lista}">Listar Articulos</a></li>
         </ul>
       </li>
 
 
       <li th:if="${session.usuariosession != null}" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Autores
+          Fabricas
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/autor/registrar}">Crear Autor</a></li>
+          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/fabrica/guardar}">Crear Fabrica</a></li>
           <li sec:authorize="hasRole('ADMIN')"><hr class="dropdown-divider"></li>
 
-          <li><a class="dropdown-item" th:href="@{/autor/lista}">Listar Autores</a></li>
-        </ul>
-      </li>
-
-
-
-      <li th:if="${session.usuariosession != null}" class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Editoriales
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-          <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/editorial/registrar}">Crear Editorial</a></li>
-          <li sec:authorize="hasRole('ADMIN')"><hr class="dropdown-divider"></li>
-
-          <li><a class="dropdown-item" th:href="@{/editorial/lista}">Listar Editoriales</a></li>
+          <li><a class="dropdown-item" th:href="@{/fabrica/lista}">Listar Fabrica</a></li>
         </ul>
       </li>
 
@@ -75,7 +60,7 @@
       </li>
 
       <li th:if="${session.usuariosession == null}" class="nav-item dropdown">
-        <a class="nav-link" href="registrar" id="navbarDropdown" role="button" aria-expanded="false">
+        <a class="nav-link" href="/registrar" id="navbarDropdown" role="button" aria-expanded="false">
           Registrate!
         </a>
       </li>

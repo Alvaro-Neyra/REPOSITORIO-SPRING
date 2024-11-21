@@ -32,9 +32,10 @@ public class ArticuloControlador {
     }
 
     @PostMapping("/guardar")
-    public String registro(@RequestParam(required =  false) String idArticulo, @RequestParam(required = false) Integer nroArticulo, String nombreArticulo, String descripcionArticulo, @RequestParam(required = false) String idFabrica, ModelMap modelo) {
+    public String registro(String nombreArticulo, String descripcionArticulo, @RequestParam(required = false) String idFabrica, ModelMap modelo) {
         try {
             articuloServicios.guardarArticulo(nombreArticulo, descripcionArticulo, idFabrica);
+            System.out.println("Articulo guardado con exito 1");
             modelo.addAttribute("mensaje", "Articulo guardado con exito");
         } catch (Exception e) {
             modelo.addAttribute("error", e.getMessage());
@@ -48,7 +49,7 @@ public class ArticuloControlador {
     public String lista(ModelMap modelo) {
         List<Articulo> articulos = articuloServicios.listarArticulos();
         modelo.addAttribute("articulos", articulos);
-        return "articulo_lista.html";
+        return "articulo_list.html";
     }
 
     @GetMapping("/modificar/{id}")

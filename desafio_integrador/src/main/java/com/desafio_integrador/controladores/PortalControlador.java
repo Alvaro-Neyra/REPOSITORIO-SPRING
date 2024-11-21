@@ -2,6 +2,7 @@ package com.desafio_integrador.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import com.desafio_integrador.servicios.UsuarioServicios;
 
 import jakarta.servlet.http.HttpSession;
 
+@Controller
 public class PortalControlador {
     @Autowired
     private UsuarioServicios usuarioServicios;
@@ -25,7 +27,7 @@ public class PortalControlador {
         return "index.html";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/inicio")
     public String inicio(HttpSession session) {
         Usuario usuario = usuarioServicios.getUsuarioAutenticado();

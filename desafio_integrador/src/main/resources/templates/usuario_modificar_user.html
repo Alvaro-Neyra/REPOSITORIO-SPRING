@@ -12,9 +12,9 @@
 
 <div class="container-fluid m-5 contenedor">
 
-    <form class="formulario" th:action="@{/perfil/{id}(id=${usuario.id})}" method="POST"  enctype="multipart/form-data">
+    <form class="formulario" th:action="@{/perfil/{id}(id=${usuario.idUsuario})}" method="POST"  enctype="multipart/form-data">
 
-        <input hidden th:value="${usuario.id}" name="id">
+        <input hidden th:value="${usuario.idUsuario}" name="id">
 
         <div class="form-group my-3">
             <label class="mb-2">Modificar Usuario</label>
@@ -23,14 +23,14 @@
         </div>
 
         <div class="form-group my-3">
-            <label class="mb-2">Email</label>
-            <input th:value="${usuario.email}" type="text" class="form-control" name="email" placeholder="Email de Usuario">
+            <label class="mb-2">Username</label>
+            <input th:value="${usuario.username}" type="text" class="form-control" name="username" placeholder="Username">
         </div>
 
-        <div class="form-group my-3">
+        <!-- <div class="form-group my-3">
             <label class="mb-2">Imagen</label>
             <input type="file" class="form-control" name="archivo">
-        </div>
+        </div> -->
 
         <div class="form-group my-3">
             <label class="mb-2">Nueva contrasena</label>
