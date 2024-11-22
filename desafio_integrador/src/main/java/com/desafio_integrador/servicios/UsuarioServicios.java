@@ -61,7 +61,7 @@ public class UsuarioServicios implements UserDetailsService {
     }
 
     @Transactional
-    public void modificarUsuario(String id, String nombre, String username, String password, String password2, Rol rol) throws MiException {
+    public void modificarUsuario(String id, String nombre, String username, String lastName, String password, String password2, Rol rol) throws MiException {
         validar(nombre, username, password, password2);
         validar(rol);
         Optional<Usuario> usuario = usuarioRepositorio.findById(id);
@@ -69,6 +69,7 @@ public class UsuarioServicios implements UserDetailsService {
             Usuario usuarioAModificar = usuario.get();
             usuarioAModificar.setNombre(nombre);
             usuarioAModificar.setUsername(username);
+            usuarioAModificar.setApellido(lastName);
             usuarioAModificar.setPassword(new BCryptPasswordEncoder().encode(password));
             usuarioAModificar.setRol(rol);
             usuarioRepositorio.save(usuarioAModificar);

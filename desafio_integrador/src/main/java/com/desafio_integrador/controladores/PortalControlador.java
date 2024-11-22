@@ -1,5 +1,8 @@
 package com.desafio_integrador.controladores;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.desafio_integrador.entidades.Usuario;
+import com.desafio_integrador.enumeraciones.Rol;
 import com.desafio_integrador.excepciones.MiException;
 import com.desafio_integrador.servicios.UsuarioServicios;
 
@@ -108,4 +112,63 @@ public class PortalControlador {
             return "usuario_modificar_user.html";
         }
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/usuarios")
+    public String listarUsuarios(ModelMap modelo) {
+        try {
+            modelo.put("usuarios", usuarioServicios.listarUsuarios());
+            return "usuarios_list.html";
+        } catch (Exception e) {
+            modelo.put("error", e.getMessage());
+            return "inicio.html";
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/usuario/modificar/{id}")
+    public String modificarUsuarioGet(@PathVariable String id, ModelMap modelo) {
+        try {
+            List<Rol> roles = Arrays.asList(Rol.values());
+            Usuario usuarioAModificar = usuarioServicios.getOne(id);
+            modelo.put("usuario", usuarioAModificar);
+            modelo.addAttribute("roles", roles);
+            return "usuario_modificar.html";
+        } catch (Exception e) {
+            modelo.put("error", e.getMessage());
+            return "usuario_list.html";
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/usuario/modificar/{id}")
+    public String modificarUsuario(@PathVariable String id, ModelMap modelo) {
+        try {
+            Usuario usuarioAModificar = usuarioServicios.getOne(id);
+            System.out.println("Usuario a modificar: " + usuarioAModificar.toString());
+            usuarioServicios.modificarUsuario(id, usuarioAModificar.getNombre(), usuarioAModificar.getUsername(), usuarioAModificar.getApellido(), usuarioAModificar.getPassword(), usuarioAModificar.getPassword(), usuarioAModificar.getRol());
+            System.out.println("Usuario a modificar, exitosamente: " + usuarioAModificar.toString());
+            modelo.put("usuario", usuarioAModificar);
+            modelo.addAttribute("exito", "Usuario modificado exitosamente!");
+            return "redirect:/usuarios";
+        } catch (MiException e) {
+            modelo.put("error", e.getMessage());
+            return "usuario_list.html";
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/usuario/modificarRol/{id}")
+    public String modificarRolGet(@PathVariable String id, ModelMap modelo) {
+        try {
+            usuarioServicios.cambiarRol(id);
+            modelo.put("exito", "Rol modificado exitosamente!");
+            modelo.addAttribute("usuarios", usuarioServicios.listarUsuarios());
+            return "redirect:/usuarios";
+        } catch (Exception e) {
+            modelo.put("error", e.getMessage());
+            return "usuario_list.html";
+        }
+    }
+
 }

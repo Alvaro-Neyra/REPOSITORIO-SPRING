@@ -21,8 +21,8 @@
   <thead>
   <tr>
     <th scope="col">Nombre</th>
-<!--    <th scope="col">Foto de Perfil</th>-->
-    <th scope="email">Email</th>
+<!--    <th scope="col">Foto de Perfil</th> -->
+    <th scope="email">Username</th>
     <th scope="col">Rol</th>
     <th scope="col">Cambiar Rol</th>
     <th scope="col">Modificar</th>
@@ -32,15 +32,15 @@
   <tr>
     <th scope="row" th:text="${usuario.nombre}"></th>
 <!--    <td>-->
-<!--      <a><img th:if="${usuario.imagen != null}" class="logo" th:src="@{/imagen/perfil/__${usuario.id}__}"></a>-->
+<!--      <a><img th:if="${usuario.imagen != null}" class="logo" th:src="@{/imagen/perfil/__${usuario.id}__}"></a> -->
 <!--    </td>-->
-    <td th:text="${usuario.email}"></td>
+    <td th:text="${usuario.username}"></td>
     <td th:text="${usuario.rol}"></td>
     <td>
-      <a th:href="@{/admin/modificarRol/__${usuario.id}__}"><i class="fas fa-feather-alt"></i>Cambiar</a>
+      <a th:href="@{/usuario/modificarRol/__${usuario.idUsuario}__}"><i class="fas fa-feather-alt"></i>Cambiar</a>
     </td>
     <td>
-      <a th:href= "@{/admin/usuario/modificar/__${usuario.id}__}"><i class="fas fa-feather-alt"></i> Modificar</a>
+      <a th:href= "@{/usuario/modificar/__${usuario.idUsuario}__}"><i class="fas fa-feather-alt"></i> Modificar</a>
     </td>
   </tr>
   </tbody>
